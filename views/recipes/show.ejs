@@ -1,0 +1,78 @@
+<%- include("../partials/header") %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">Fairman Kitchen</p>
+            <div class="list-group">
+                <li class="list-group-item">Serving Size: <%= recipe.serving %></li>
+                <li class="list-group-item">Prep Time: <%= recipe.ptime %></li>
+                <li class="list-group-item">Cook Time: <%= recipe.ctime %></li>
+            </div>
+
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Ingredients</h3>
+                </div>
+                <div class="panel-body">
+                    <% recipe.ingredients.forEach(function(ingredient){%>
+                        <li><%= ingredient %></li>
+                    <% }); %>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Instructions</h3>
+                </div>
+                <div class="panel-body">
+                    <p><%= recipe.instructions %></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= recipe.image %>">
+                <div class="caption-full">
+                    <h4><a><%= recipe.name %></a></h4>
+                    <p><%= recipe.description %></p>
+                    <p>
+                        <em>Submitted By</em> <%= recipe.author.username %>
+                    </p>
+                    <!--Only logged in users can see the Edit and Delete button-->
+                    <% if(currentUser && recipe.author.id.equals(currentUser._id)){ %>
+                        <a class="btn btn-xs btn-warning" href="/recipes/<%= recipe._id %>/edit">Edit</a>
+                        <form class="delete-form" action="/recipes/<%= recipe._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                    <% } %>
+                </div>
+            </div>
+            <div class="well">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/recipes/<%= recipe._id %>/comments/new">Leave a Review</a>
+                </div>
+                <hr>
+                <% recipe.comments.forEach(function(comment){ %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong><%= comment.author.username %></strong>
+                            <span class="pull-right">10 Days Ago</span>
+                            <p> <%= comment.text %> </p>
+                            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                                <a class="btn btn-xs btn-warning" 
+                                    href="/recipes/<%= recipe._id %>/comments/<%= comment._id %>/edit">
+                                    Edit
+                                </a>
+                                <form class="delete-form" action="/recipes/<%= recipe._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                    <button class="btn btn-xs btn-danger">Delete</button>
+                                </form>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div> 
+</div>
+<%- include("../partials/footer") %>
