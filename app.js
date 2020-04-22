@@ -67,7 +67,7 @@ app.use("/", authRoutes);
 //});
 
 const { PORT, LOCAL_ADDRESS } = process.env
-app.listen(PORT, LOCAL_ADDRESS, () => {
-  const address = app.address();
+server.listen(PORT, LOCAL_ADDRESS, () => {
+  const address = server.address();
   console.log('server listening at', address);
 });
