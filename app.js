@@ -66,8 +66,3 @@ app.use("/", authRoutes);
 //    console.log("Recipe server has started!")
 //});
 
-const { PORT, LOCAL_ADDRESS } = process.env
-server.listen(PORT, LOCAL_ADDRESS, () => {
-  const address = server.address();
-  console.log('server listening at', address);
-});
