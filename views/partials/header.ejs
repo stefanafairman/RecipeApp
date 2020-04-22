@@ -16,7 +16,7 @@
                         <% if(!currentUser){ %>
                             <li>
                                 <form action="/recipes" method="GET" class="form-inline">
-                                    <div class="form-group">
+                                    <div id="pd" class="form-group">
                                         <input type="text" name="search" placeholder="Search Recipe..." class="form-control">
                                         <input type="submit" value="search" class="btn btn-warning">
                                     </div>
@@ -26,6 +26,14 @@
                             <li><a href="/register">Sign Up</a></li>
                         <% } 
                         else { %>
+                            <li>
+                                <form action="/recipes" method="GET" class="form-inline">
+                                    <div id="pd" class="form-group">
+                                        <input type="text" name="search" placeholder="Search Recipe..." class="form-control">
+                                        <input type="submit" value="search" class="btn btn-warning">
+                                    </div>
+                                </form>
+                            </li>
                             <li><a href="#">Signed in as <%= currentUser.username %></a></li>
                             <li><a href="/logout">Logout</a></li>
                         <% } %>
