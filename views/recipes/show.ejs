@@ -37,7 +37,7 @@
                     <h4><a><%= recipe.name %></a></h4>
                     <p><%= recipe.description %></p>
                     <p>
-                        <em>Submitted By</em> <%= recipe.author.username %>
+                        <em>Submitted By: <a href="/users/<%= recipe.author.id %>"> <%= recipe.author.username %> </a>, <%= moment(recipe.createdAt).fromNow() %> </em>
                     </p>
                     <!--Only logged in users can see the Edit and Delete button-->
                     <% if(currentUser && recipe.author.id.equals(currentUser._id)){ %>
@@ -57,7 +57,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <strong><%= comment.author.username %></strong>
-                            <span class="pull-right">10 Days Ago</span>
+                            <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
                             <p> <%= comment.text %> </p>
                             <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
                                 <a class="btn btn-xs btn-warning" 

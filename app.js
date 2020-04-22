@@ -1,19 +1,20 @@
 //require packages
-var express         = require("express"),               //npm install express --save
-    app             = express(),                        //npm install ejs --save
-    bodyParser      = require("body-parser"),           //npm install body-parser --save
-    mongoose        = require("mongoose");              //npm install mongoose --save
-    flash           = require("connect-flash");         //npm install connect-flash --save
-    passport        = require("passport"),              //npm install passport --save
-    LocalStrategy   = require("passport-local")         //npm install passport-local --save
-    methodOverride  = require("method-override")        //npm install method-override --save
-    Recipe          = require("./models/recipe"),
-    Comment         = require("./models/comment"),
-    User            = require("./models/user");
-
+var express             = require("express"),               //npm install express --save
+    app                 = express(),                        //npm install ejs --save
+    bodyParser          = require("body-parser"),           //npm install body-parser --save
+    mongoose            = require("mongoose");              //npm install mongoose --save
+    flash               = require("connect-flash");         //npm install connect-flash --save
+    passport            = require("passport"),              //npm install passport --save
+    LocalStrategy       = require("passport-local")         //npm install passport-local --save
+    methodOverride      = require("method-override")        //npm install method-override --save
+    Recipe              = require("./models/recipe"),
+    Comment             = require("./models/comment"),
+    User                = require("./models/user");
+    app.locals.moment   = require("moment");
+    
 //require routes files from the routes directory
 var commentRoutes       = require("./routes/comment"),
-    recipeRoutes    = require("./routes/recipe"),
+    recipeRoutes        = require("./routes/recipe"),
     authRoutes          = require("./routes/auth");
 
 //more connections
@@ -70,3 +71,4 @@ const PORT = process.env.PORT||'8080';
 app.listen(PORT, function(){
     console.log("Server has started");
 });
+

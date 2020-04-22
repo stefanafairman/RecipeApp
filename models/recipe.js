@@ -13,6 +13,7 @@ var recipeSchema = new mongoose.Schema({
     //Important
     ingredients: [String],
     instructions: String,
+    createdAt: { type: Date, default: Date.now },
     author: {
        id: {
          type: mongoose.Schema.Types.ObjectId,
