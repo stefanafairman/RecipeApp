@@ -18,7 +18,7 @@ var commentRoutes       = require("./routes/comment"),
 
 //more connections
 //mongoose.connect("mongodb://localhost/recipe_website", { useNewUrlParser: true });
-mongoose.connect("mongodb://origvampire:ThisIsTh31@ds247178.mlab.com:47178/heroku_qpsvdnq4", 
+mongoose.connect('mongodb://origvampire:ThisIsTh31@ds247178.mlab.com:47178/heroku_qpsvdnq4', 
     { 
         useNewUrlParser: true,
         useCreateIndex: true 
