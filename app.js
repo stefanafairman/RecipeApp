@@ -66,3 +66,7 @@ app.use("/", authRoutes);
 //    console.log("Recipe server has started!")
 //});
 
+const PORT = process.env.PORT||'8080';
+app.listen(PORT, function(){
+    console.log("Server has started");
+});
