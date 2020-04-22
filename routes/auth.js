@@ -5,7 +5,7 @@ var passport = require("passport");
 var User = require("../models/user");
 
 //ROOT ROUTE
-router.get("/", function(req, res){
+router.get("", function(req, res){
     res.render("landing");
 });
 

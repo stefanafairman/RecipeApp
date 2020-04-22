@@ -23,7 +23,11 @@ var commentRoutes       = require("./routes/comment"),
      //   useNewUrlParser: true
     //});
 
-mongoose.connect("mongodb+srv://origvampire:5SOSkeepcalm@cluster0-vcyz0.mongodb.net/recipe_website?retryWrites=true&w=majority", { useNewUrlParser: true });
+mongoose.connect("mongodb+srv://origvampire:5SOSkeepcalm@cluster0-vcyz0.mongodb.net/recipe_website?retryWrites=true&w=majority", 
+{ 
+    useNewUrlParser: true,
+    useUnifiedTopology: true 
+});
 
 app.use(bodyParser.urlencoded({extended: true})); //used all the time
 app.set("view engine", "ejs"); //used so that you don't always have to type .ejs under render
@@ -58,6 +62,6 @@ app.use("/recipes", recipeRoutes);
 app.use("/", authRoutes);
 
 // Listen for ports
-app.listen(3000, function(){
-    console.log("Recipe server has started!")
-});
+//app.listen(3000, function(){
+//    console.log("Recipe server has started!")
+//});
