@@ -18,7 +18,11 @@ var commentRoutes       = require("./routes/comment"),
 
 //more connections
 //mongoose.connect("mongodb://localhost/recipe_website", { useNewUrlParser: true });
-mongoose.connect("mongodb+srv://origvampire:ThisIsTh31@cluster0-vcyz0.mongodb.net/recipe_website?retryWrites=true&w=majority");
+mongoose.connect("mongodb://origvampire:ThisIsTh31@ds247178.mlab.com:47178/heroku_qpsvdnq4", 
+    { 
+        useNewUrlParser: true,
+        useCreateIndex: true 
+    });
 
 app.use(bodyParser.urlencoded({extended: true})); //used all the time
 app.set("view engine", "ejs"); //used so that you don't always have to type .ejs under render
