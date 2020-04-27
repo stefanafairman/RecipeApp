@@ -1,3 +1,4 @@
+
 .thumbnail img {
     width: 100%;
 }
@@ -20,4 +21,30 @@
 
 #pd{
     padding: 9px;
+}
+
+.footer{
+    text-align: center;
+    margin-top: 15px;
+}
+
+.caption .btn{
+    width: 100%;
+    text-align: center;
+}
+
+.thumbnail-title{
+    text-align: center;
+}
+
+.navbar{
+    background: linear-gradient(to right, #f7971e, #ffd200);
+}
+
+.navbar .navbar-brand{
+    color: black;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: black;
 }

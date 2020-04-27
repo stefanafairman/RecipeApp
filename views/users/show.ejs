@@ -14,9 +14,22 @@
         <div class="col-md-8">
             <h3><%= user.username %>'s recipes: </h3>
             <ul>
-                <% recipes.forEach(function(recipe) { %>
-                    <li><a href="/recipes/<%= recipe.id %>"> <%= recipe.name %></a></li>
-                <% }); %>
+                <div class="row">
+                    <% recipes.forEach(function(recipe) { %>
+                        <div class="col-lg-4">
+                            <div class="container">
+                                <div class="thumbnail" style="width:15%">
+                                    <img src="<%= recipe.image %>" alt="image cap">
+                                    <div class="caption">
+                                        <h5 class="thumbnail-title"><%= recipe.name %></h5>
+                                        <a href="/recipes/<%= recipe.id %>" class="btn btn-primary">Go to Recipe</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <li><a href="/recipes/<%= recipe.id %>"> <%= recipe.name %></a></li> -->
+                    <% }); %>
+                </div>
             </ul>
         </div>
     </div>
