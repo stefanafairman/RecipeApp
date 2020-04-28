@@ -51,8 +51,19 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 //middleware to run for every route and keep track of the current user (logged in or out)
-app.use(function(req, res, next){
+app.use(async function(req, res, next){
     res.locals.currentUser = req.user; //empty if no one is signed in or contain username and id of current user
+    //=======4/28=====//
+    //populate notifications
+    if(req.user) {
+        try {
+            let user = await User.findById(req.user._id).populate('notifications', null, {isRead: false}).exec();
+            res.locals.notifications = user.notifications.reverse();
+        } catch(err) {
+          console.log(err.message);
+        }
+    }
+    
     res.locals.error = req.flash("error"); //if there's any error, it will be flashed
     res.locals.success = req.flash("success"); //if there was a success, it will be flashed
     next();
@@ -62,7 +73,7 @@ app.use("/recipes/:id/comments", commentRoutes);
 app.use("/recipes", recipeRoutes);
 app.use("/", authRoutes);
 
-// Listen for ports
+//==========Listen for ports===========//
 //app.listen(3000, function(){
 //    console.log("Recipe server has started!")
 //});

@@ -3,6 +3,7 @@ var express = require("express");
 var router = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
+var Notification = require("../models/notification");
 var Recipe = require("../models/recipe");
 
 //ROOT ROUTE
@@ -70,16 +71,61 @@ router.get("/users/:id", function(req, res){
             req.flash("error", "Something went wrong");
             return res.redirect("/");
         }
-
-    Recipe.find().where('author.id').equals(foundUser._id).exec(function(err, recipes){
-        if(err){
-            req.flash("error", "Something went wrong");
-            return res.redirect("/");
-        }
-        res.render("users/show", {user: foundUser, recipes: recipes});
-    });
+        User.findById(req.params.id).populate("followers").exec();
+        Recipe.find().where('author.id').equals(foundUser._id).exec(function(err, recipes){
+            if(err){
+                req.flash("error", "Something went wrong");
+                return res.redirect("/");
+            }
+            res.render("users/show", {user: foundUser, recipes: recipes});
+        });
     });
 });
+  
+
+//=========4/28========//
+// follow user
+router.get('/follow/:id', isLoggedIn, async function(req, res) {
+    try {
+      let user = await User.findById(req.params.id);
+      user.followers.push(req.user._id);
+      user.save();
+      req.flash('success', 'Successfully followed ' + user.username + '!');
+      res.redirect('/users/' + req.params.id);
+    } catch(err) {
+      req.flash('error', err.message);
+      res.redirect('back');
+    }
+  });
+  
+  // view all notifications
+  router.get('/notifications', isLoggedIn, async function(req, res) {
+    try {
+      let user = await User.findById(req.user._id).populate({
+        path: 'notifications',
+        options: { sort: { "_id": -1 } }
+      }).exec();
+      let allNotifications = user.notifications;
+      res.render('notifications/index', { allNotifications });
+    } catch(err) {
+      req.flash('error', err.message);
+      res.redirect('back');
+    }
+  });
+  
+  // handle notification
+  router.get('/notifications/:id', isLoggedIn, async function(req, res) {
+    try {
+      let notification = await Notification.findById(req.params.id);
+      notification.isRead = true;
+      notification.save();
+      res.redirect(`/recipes/${notification.recipeId}`);
+    } catch(err) {
+      req.flash('error', err.message);
+      res.redirect('back');
+    }
+  });
+
 
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){

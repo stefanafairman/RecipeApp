@@ -2,6 +2,7 @@
 var express = require("express");
 var router = express.Router();
 var Recipe = require("../models/recipe");
+var Notification = require("../models/notification");
 var middleware = require("../middleware"); //automatically requires index.js
 
 //INDEX
@@ -43,7 +44,7 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 });
 
 //create Recipe
-router.post("/", middleware.isLoggedIn, function(req, res){
+router.post("/", middleware.isLoggedIn, async function(req, res){
     //get data from form and add to Recipes array
     var name = req.body.name;
     var image = req.body.image;
@@ -60,14 +61,36 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     }
     var newRecipe = {name: name, image: image, description: desc, serving: serving, ctime: ctime, ptime: ptime, ingredients: split, instructions: instructions, author: author};
     //create new Recipe and save to database
-    Recipe.create(newRecipe, function(err, newlyCreated){
-        if(err){
-            console.log(err);
+    // Recipe.create(newRecipe, function(err, newlyCreated){
+    //     if(err){
+    //         console.log(err);
+    //     }
+    //     else{
+    //         res.redirect("/recipes"); //redirect back to Recipes page
+    //     }
+    // });
+
+//========4/28======//
+    try {
+        let recipe = await Recipe.create(newRecipe);
+        let user = await User.findById(req.user._id).populate("followers").exec();
+        let newNotification = {
+          username: req.user.username,
+          recipeId: recipe.id
         }
-        else{
-            res.redirect("/recipes"); //redirect back to Recipes page
+        for(const follower of user.followers) {
+          let notification = await Notification.create(newNotification);
+          follower.notifications.push(notification);
+          follower.save();
         }
-    });
+  
+        //redirect back to recipe page
+        res.redirect(`/recipes/${recipe.id}`);
+      } 
+      catch(err) {
+        req.flash('error', err.message);
+        res.redirect('back');
+      }
 });
 
 //SHOW

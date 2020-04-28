@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Fairman Kitchen</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="/stylesheets/main.css">
     </head>
     <body>
@@ -22,6 +22,7 @@
                                     </div>
                                 </form>
                             </li>
+
                             <li><a href="/login">Login</a></li>
                             <li><a href="/register">Sign Up</a></li>
                         <% } 
@@ -34,6 +35,33 @@
                                     </div>
                                 </form>
                             </li>
+                            <!--4/28-->
+                            <li>
+                                <a data-target="#" role="button" href="/notifications">
+                                    Notifications <span class="badge"><%= notifications.length %></span>
+                                </a>
+                            </li>
+
+                            <!-- <li>
+                                <div class="dropdown">
+                                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Notifications <span class="badge"><%= notifications.length %></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a data-target="#" href="/notifications">View past notifications</a>
+                                        </li>
+                                        <% notifications.forEach(function(notification) { %>                          
+                                        <li>
+                                            <a data-target="#" href="/notifications/<%= notification.id %>">
+                                                <%= notification.username %> posted a new recipe
+                                            </a>
+                                        </li>
+                                    <% }); %>
+                                    </ul>
+                                </div>
+                            </li> -->
+
                             <li><a href="#">Signed in as <%= currentUser.username %></a></li>
                             <li><a href="/logout">Logout</a></li>
                         <% } %>

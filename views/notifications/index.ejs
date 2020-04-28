@@ -1,0 +1,27 @@
+<%- include("../partials/header") %>
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Notifications</h3>
+				</div>
+				<div class="panel-body">
+					<ul>
+						<% allNotifications.forEach(function(notification) { %>
+						<li>
+							<a href="/recipes/<%= notification.recipeId %>">
+								<%= notification.username %> created a new recipe %>
+							</a>
+						</li>
+						<% }); %>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<%- include("../partials/footer") %>
