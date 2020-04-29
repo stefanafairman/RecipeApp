@@ -1,13 +1,18 @@
 var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
+var bcrypt = require("bcrypt-nodejs");
 
 var UserSchema = new mongoose.Schema({
-    username: String,
+    username: { type: String, unique: true, required: true },
     password: String,
     avatar: String,
     firstName: String,
     lastName: String,
-    email: String,
+    email: { type: String, unique: true, required: true },
+
+    //reset password
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
     
     //====4/28====//
     //followers & notification

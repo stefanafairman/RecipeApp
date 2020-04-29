@@ -1,29 +1,29 @@
 <%- include("./partials/header") %>
     <div class="container">
         <div class="row">
-            <h1 style="text-align: center">Sign Up</h1>
             <div style="width: 30%; margin: 25px auto;">
                 <form action="/register" method="POST">
+                    <legend>Register</legend>
                     <div class="form-group">
-                        <input class="form-control" type="text" name="username" placeholder="username">
+                        <input class="form-control" type="text" name="username" placeholder="Username" required>
                     </div>
                     <div>
-                        <input class="form-control" type="password" name="password" placeholder="password">
+                        <input class="form-control" type="password" name="password" placeholder="Password" required>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="text" name="firstName" placeholder="First Name">
+                        <input style="margin-top: 15px;" class="form-control" type="text" name="firstName" placeholder="First Name">
                     </div>
                     <div class="form-group">
                         <input class="form-control" type="text" name="lastName" placeholder="Last Name">
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="email" name="email" placeholder="Email">
+                        <input class="form-control" type="email" name="email" placeholder="Email" required>
                     </div>
                     <div class="form-group">
                         <input class="form-control" type="text" name="avatar" placeholder="Avatar URL">
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-lg btn-primary btn-block">Sign Up</button>
+                        <button class="btn btn-lg btn-danger btn-block">Sign Up</button>
                     </div>
                 </form>
             </div>

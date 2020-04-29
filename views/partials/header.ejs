@@ -3,6 +3,7 @@
     <head>
         <title>Fairman Kitchen</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Rokkitt">
         <link rel="stylesheet" href="/stylesheets/main.css">
     </head>
     <body>
@@ -31,37 +32,15 @@
                                 <form action="/recipes" method="GET" class="form-inline">
                                     <div id="pd" class="form-group">
                                         <input type="text" name="search" placeholder="Search Recipe..." class="form-control">
-                                        <input type="submit" value="search" class="btn btn-warning">   
+                                        <input type="submit" value="search" class="btn btn-danger">   
                                     </div>
                                 </form>
                             </li>
-                            <!--4/28-->
                             <li>
                                 <a data-target="#" role="button" href="/notifications">
                                     Notifications <span class="badge"><%= notifications.length %></span>
                                 </a>
                             </li>
-
-                            <!-- <li>
-                                <div class="dropdown">
-                                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Notifications <span class="badge"><%= notifications.length %></span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a data-target="#" href="/notifications">View past notifications</a>
-                                        </li>
-                                        <% notifications.forEach(function(notification) { %>                          
-                                        <li>
-                                            <a data-target="#" href="/notifications/<%= notification.id %>">
-                                                <%= notification.username %> posted a new recipe
-                                            </a>
-                                        </li>
-                                    <% }); %>
-                                    </ul>
-                                </div>
-                            </li> -->
-
                             <li><a href="#">Signed in as <%= currentUser.username %></a></li>
                             <li><a href="/logout">Logout</a></li>
                         <% } %>
@@ -69,11 +48,12 @@
                 </div>
             </div>
         </nav>
+
         <div class="container">
             <% if(error && error.length > 0){ %>
-                <div class="alert alert-danger" role="alert"><%= error %></div>
+                <div id="danger" class="alert alert-danger" role="alert"><%= error %></div>
             <% } %>
             <% if(success && success.length > 0){ %>
-                <div class="alert alert-success" role="alert"><%= success %></div>
+                <div id="success" class="alert alert-success" role="alert"><%= success %></div>
             <% } %>
         </div>

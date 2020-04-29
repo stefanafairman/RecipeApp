@@ -7,7 +7,7 @@
             <div class="thumbnail">
                 <img class="img-responsive" src="<%= user.avatar %>" alt="user profile image">
                 <div class="caption">
-                    <a href="/follow/<%= user.id %>"><button class="btn btn-primary">Follow <%= user.username %></button></a>
+                    <a href="/follow/<%= user.id %>"><button class="btn btn-danger">Follow <%= user.username %></button></a>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
                                     <img src="<%= recipe.image %>" alt="image cap">
                                     <div class="caption">
                                         <h5 class="thumbnail-title"><%= recipe.name %></h5>
-                                        <a href="/recipes/<%= recipe.id %>" class="btn btn-primary">Go to Recipe</a>
+                                        <a href="/recipes/<%= recipe.id %>" class="btn btn-danger">Go to Recipe</a>
                                     </div>
                                 </div>
                             </div>

@@ -1,3 +1,19 @@
+body{
+    font-family: 'Rokkitt';
+    background-color: #EFEFEF;
+}
+
+a{
+    color: #FF3B3F;
+}
+
+.btn{
+    background-color: #FF3B3F;
+}
+
+.glyphicon{
+    color: #FF3B3F;
+}
 
 .thumbnail img {
     width: 100%;
@@ -37,22 +53,52 @@
     text-align: center;
 }
 
-/* .navbar{
-    background: linear-gradient(to right, #f7971e, #ffd200);
-} */
-
 .navbar{
-    background: linear-gradient(to right, #33ccff 0%, #ff99cc 100%);
+    background-color: #CAEBF2;
 }
 
 .navbar .navbar-brand{
-    color: black;
+    color: rgb(90, 90, 90);
 }
 
 .navbar-default .navbar-nav > li > a {
+    color: rgb(90, 90, 90);
+}
+
+.panel-default .panel-heading{
+    background-color: #FF3B3F;
+    color: #EFEFEF;
+}
+
+.badge{
+    background-color: #FF3B3F;
+}
+
+#success{
+    background-color: rgb(163, 216, 228);
     color: black;
 }
 
-.container .row .col-md-3 .panel-default .panel-heading{
-    background-color:  #ff99cc;
+#danger{
+    background-color: rgb(231, 129, 131);
+    color: black;
 }
+
+
+/* Colors
+Dusty       #96858F
+Lavendar    #6D7993
+Overcast    #9099A2
+Paper       #D5D5D5
+
+Sky         #CAEBF2
+Carbon      #A9A9A9
+Watermelon  #FF3B3F
+Neutral     #EFEFEF
+
+Terracotta  #945D60
+Herb        #626E60
+Chilli      #AF473C
+Charcoal    #3C3C3C
+
+*/
