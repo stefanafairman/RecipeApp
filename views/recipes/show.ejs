@@ -1,8 +1,8 @@
 <%- include("../partials/header") %>
 <div class="container">
     <div class="row">
-        <div class="col-md-3">
-            <p class="lead">Fairman Kitchen</p>
+        <div class="col-md-4">
+            <p class="lead"><%= recipe.name %></p>
             <div class="list-group">
                 <li class="list-group-item">Serving Size: <%= recipe.serving %></li>
                 <li class="list-group-item">Prep Time: <%= recipe.ptime %></li>
@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-4">
             <div class="thumbnail">
                 <img class="img-responsive" src="<%= recipe.image %>">
                 <div class="caption-full">
@@ -48,9 +48,13 @@
                     <% } %>
                 </div>
             </div>
+        </div>
+
+        <div class="col-md-4">
+            <p class="lead">Comments</p>
             <div class="well">
-                <div class="text-right">
-                    <a class="btn btn-success" href="/recipes/<%= recipe._id %>/comments/new">Leave a Review</a>
+                <div class="text-left">
+                    <a class="btn btn-success" href="/recipes/<%= recipe._id %>/comments/new">Leave a Comment</a>
                 </div>
                 <hr>
                 <% recipe.comments.forEach(function(comment){ %>

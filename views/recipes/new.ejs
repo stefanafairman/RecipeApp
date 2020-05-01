@@ -4,21 +4,18 @@
     <div class="row">
         <h1 style="text-align: center">Add a New Recipe</h1>
         <div style="width: 30%; margin: 25px auto;">
-            <form action="/recipes" method="POST">
+            <form action="/recipes" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="name" placeholder="name">
+                    <input class="form-control" type="text" name="name" placeholder="name" required>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <input class="form-control" type="text" name="image" placeholder="image url">
-                </div>
+                </div> -->
 
-                <!-- 
                 <div class="form-group">
-                    <label for="exampleInputFile">File input</label>
-                    <input class="form-control" type="file" name="image">
-                    <p class="help-block">Example block-level help text here.</p>
+                    <label for="image">Image</label>
+                    <input type="file" name="image" id="image" accept="image/*" required>
                 </div>
-                -->
 
                 <div class="form-group">
                     <input class="form-control" type="text" name="description" placeholder="description">

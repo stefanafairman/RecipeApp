@@ -1,3 +1,4 @@
+require("dotenv").config();
 //REQUIRE
 var express = require("express");
 var router = express.Router();
@@ -100,15 +101,15 @@ router.post("/forgot", function(req, res, next){
         },
         function(token, user, done) {
             var smtpTransport = nodemailer.createTransport({
-                service: 'Gmail',
+                service: process.env.NODEMAILER_EMAIL,
                 auth: {
-                    user: "origvampirettv@gmail.com",
-                    pass: "5SOSkeepcalm" //need to hide this!
+                    user: process.env.NODEMAILER_USER,
+                    pass: process.env.NODEMAILER_PASS 
                 }
             });
             var mailOptions = {
                 to: user.email,
-                from: "origvampirettv@gmail.com",
+                from: process.env.NODEMAILER_USER,
                 subject: "Fairman Kitchen Password Reset",
                 text: "You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n" +
                     "Please click on the following link, or paste this into your browser to complete the process:\n\n" +
@@ -166,15 +167,15 @@ router.post("/reset/:token", function(req, res){
         },
         function(user, done){
             var smtpTransport = nodemailer.createTransport({
-                service: 'Gmail',
+                service: process.env.NODEMAILER_EMAIL,
                 auth: {
-                    user: "origvampirettv@gmail.com",
-                    pass: "5SOSkeepcalm" //need to hide this!
+                    user: process.env.NODEMAILER_USER,
+                    pass: process.env.NODEMAILER_PASS 
                 }
             });
             var mailOptions = {
                 to: user.email,
-                from: "origvampirettv@gmail.com",
+                from: process.env.NODEMAILER_USER,
                 subject: "Fairman Kitchen Password Changed",
                 text: "Hello,\n\n" + "This is a confirmation that the password for your account " + user.email + " has just been changed.\n"
             };

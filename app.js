@@ -1,3 +1,4 @@
+require("dotenv").config();
 //require packages
 var express             = require("express"),               //npm install express --save
     app                 = express(),                        //npm install ejs --save
@@ -11,20 +12,14 @@ var express             = require("express"),               //npm install expres
     Comment             = require("./models/comment"),
     User                = require("./models/user");
     app.locals.moment   = require("moment");
-    
+
 //require routes files from the routes directory
 var commentRoutes       = require("./routes/comment"),
     recipeRoutes        = require("./routes/recipe"),
     authRoutes          = require("./routes/auth");
 
 //more connections
-//mongoose.connect("mongodb://localhost/recipe_website", { useNewUrlParser: true });
-//mongoose.connect('mongodb://origvampire:ThisIsTh31@ds247178.mlab.com:47178/heroku_qpsvdnq4', 
-    //{ 
-     //   useNewUrlParser: true
-    //});
-
-mongoose.connect("mongodb+srv://origvampire:5SOSkeepcalm@cluster0-vcyz0.mongodb.net/recipe_website?retryWrites=true&w=majority", 
+mongoose.connect(process.env.MONGOLAB_URI, 
 { 
     useNewUrlParser: true,
     useUnifiedTopology: true 
@@ -78,8 +73,10 @@ app.use("/", authRoutes);
 //    console.log("Recipe server has started!")
 //});
 
-const PORT = process.env.PORT||'8080';
-app.listen(PORT, function(){
-    console.log("Server has started");
+let PORT = process.env.PORT;
+let HOST = process.env.HOST;
+app.listen(PORT, HOST, function(){
+    // console.log("Server has started");
+    console.log(`Server has started ${HOST}:${PORT}`);
 });
 

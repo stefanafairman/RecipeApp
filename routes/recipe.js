@@ -1,10 +1,36 @@
+require("dotenv").config();
 //REQUIRE
 var express = require("express");
 var router = express.Router();
 var Recipe = require("../models/recipe");
 var Notification = require("../models/notification");
 var middleware = require("../middleware"); //automatically requires index.js
+var request = require("request");
+//=======4/30========//
+//configuring image upload
+var multer = require("multer");
+var storage = multer.diskStorage({
+    filename: function(req, file, callback){
+        callback(null, Date.now() + file.originalname); //creating a custom name for the file
+    }
+});
+var imageFilter = function(req, file, cb){
+    if(!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)){
+        return cb(new Error("Only image files are allowed!"), false); //accept image files only
+    }
+    cb(null, true);
+};
+var upload = multer({ storage: storage, fileFilter: imageFilter });
+// end configuring image upload
 
+var cloudinary = require("cloudinary");
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+//=============BEGIN ROUTES================//
 //INDEX
 router.get("/", function(req, res){
     var noMatch;
@@ -44,10 +70,10 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 });
 
 //create Recipe
-router.post("/", middleware.isLoggedIn, async function(req, res){
+router.post("/", middleware.isLoggedIn, upload.single("image"), async function(req, res){
     //get data from form and add to Recipes array
     var name = req.body.name;
-    var image = req.body.image;
+    var image = "";
     var desc = req.body.description;
     var serving = req.body.serving;
     var ctime = req.body.ctime;
@@ -60,15 +86,12 @@ router.post("/", middleware.isLoggedIn, async function(req, res){
         username: req.user.username
     }
     var newRecipe = {name: name, image: image, description: desc, serving: serving, ctime: ctime, ptime: ptime, ingredients: split, instructions: instructions, author: author};
-    //create new Recipe and save to database
-    // Recipe.create(newRecipe, function(err, newlyCreated){
-    //     if(err){
-    //         console.log(err);
-    //     }
-    //     else{
-    //         res.redirect("/recipes"); //redirect back to Recipes page
-    //     }
-    // });
+    
+    //callback for the image upload
+    await cloudinary.uploader.upload(req.file.path, function(result){
+        newRecipe.image = result.secure_url;
+        newRecipe.imageId = result.public_id;
+    });
 
 //========4/28======//
     try {
@@ -117,14 +140,42 @@ router.get("/:id/edit", middleware.checkRecipeOwnership, function(req, res){
 });
 
 //UPDATE
-router.put("/:id", middleware.checkRecipeOwnership, function(req, res){
-    //find and update the correct Recipe
+router.put("/:id", upload.single("image"), middleware.checkRecipeOwnership, function(req, res){
+    // Recipe.findById(req.params.id, async function(err, recipe){
+    //     if(err){
+    //         req.flash("error", err.message);
+    //         res.redirect("back");
+    //     } else {
+    //         if (req.file) {
+    //           try {
+    //               await cloudinary.v2.uploader.destroy(recipe.imageId);
+    //               var result = await cloudinary.v2.uploader.upload(req.file.path);
+    //               recipe.imageId = result.public_id;
+    //               recipe.image = result.secure_url;
+    //           } catch(err) {
+    //               req.flash("error", err.message);
+    //               return res.redirect("back");
+    //           }
+    //         }
+    //         recipe.name = req.body.name;
+    //         // recipe.description = req.body.description;
+    //         // recipe.ingredients = req.body.ingredients.split(",");
+    //         // recipe.instructions = req.body.instructions;
+    //         // recipe.ctime = req.body.ctime;
+    //         // recipe.ptime = req.body.ptime;
+    //         recipe.save();
+    //         req.flash("success","Successfully Updated!");
+    //         res.redirect("/recipes/" + recipe._id);
+    //     }
+    // });
+    
     req.body.recipe.ingredients = req.body.recipe.ingredients.split(",");
     Recipe.findByIdAndUpdate(req.params.id, req.body.recipe, function(err, updatedRecipe){
         if(err){
             res.redirect("/recipes");
         }
         else{
+            req.flash("success","Successfully edited the recipe!");
             res.redirect("/recipes/" + req.params.id);
         }
     });

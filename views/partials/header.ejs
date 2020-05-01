@@ -41,7 +41,7 @@
                                     Notifications <span class="badge"><%= notifications.length %></span>
                                 </a>
                             </li>
-                            <li><a href="#">Signed in as <%= currentUser.username %></a></li>
+                            <li><a href="/users/<%= currentUser.id %>">Signed in as <%= currentUser.username %></a></li>
                             <li><a href="/logout">Logout</a></li>
                         <% } %>
                     </ul>

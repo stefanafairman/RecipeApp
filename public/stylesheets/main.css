@@ -53,6 +53,16 @@ a{
     text-align: center;
 }
 
+#main-size{
+    width: 350px;
+    height: 400px;
+}
+
+#recipe-size{
+    width: 350px;
+    height: 400px;
+}
+
 .navbar{
     background-color: #CAEBF2;
 }

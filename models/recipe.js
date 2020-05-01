@@ -5,6 +5,7 @@ var recipeSchema = new mongoose.Schema({
    //Card
     name: String,
     image: String,
+    imageId: String,
     description: String,
     //Info
     serving: String,
