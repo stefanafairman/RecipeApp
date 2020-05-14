@@ -40,7 +40,7 @@
                         <em>Submitted By: <a href="/users/<%= recipe.author.id %>"> <%= recipe.author.username %> </a>, <%= moment(recipe.createdAt).fromNow() %> </em>
                     </p>
                     <!--Only logged in users can see the Edit and Delete button-->
-                    <% if(currentUser && recipe.author.id.equals(currentUser._id)){ %>
+                    <% if(currentUser && recipe.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                         <a class="btn btn-xs btn-warning" href="/recipes/<%= recipe._id %>/edit">Edit</a>
                         <form class="delete-form" action="/recipes/<%= recipe._id %>?_method=DELETE" method="POST">
                             <button class="btn btn-xs btn-danger">Delete</button>
@@ -63,7 +63,7 @@
                             <strong><%= comment.author.username %></strong>
                             <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
                             <p> <%= comment.text %> </p>
-                            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                            <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                                 <a class="btn btn-xs btn-danger" 
                                     href="/recipes/<%= recipe._id %>/comments/<%= comment._id %>/edit">
                                     Edit
