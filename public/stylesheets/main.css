@@ -47,6 +47,11 @@ hr {
     padding: 9px;
 }
 
+.step{
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 .footer{
     text-align: center;
     margin-top: 15px;

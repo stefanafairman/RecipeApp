@@ -13,7 +13,7 @@ var recipeSchema = new mongoose.Schema({
     ptime: String,
     //Important
     ingredients: [String],
-    instructions: String,
+    instructions: [String],
     createdAt: { type: Date, default: Date.now },
     author: {
        id: {

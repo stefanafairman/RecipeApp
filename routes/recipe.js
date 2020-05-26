@@ -79,13 +79,13 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), async function(r
     var ctime = req.body.ctime;
     var ptime = req.body.ptime;
     var ingredients = req.body.ingredients;
-    var split = ingredients.split(",");
+    //var split = ingredients.split(",");
     var instructions = req.body.instructions;
     var author = {
         id: req.user._id,
         username: req.user.username
     }
-    var newRecipe = {name: name, image: image, description: desc, serving: serving, ctime: ctime, ptime: ptime, ingredients: split, instructions: instructions, author: author};
+    var newRecipe = {name: name, image: image, description: desc, serving: serving, ctime: ctime, ptime: ptime, ingredients: ingredients, instructions: instructions, author: author};
     
     //callback for the image upload
     await cloudinary.uploader.upload(req.file.path, function(result){
@@ -141,42 +141,31 @@ router.get("/:id/edit", middleware.checkRecipeOwnership, function(req, res){
 
 //UPDATE
 router.put("/:id", upload.single("image"), middleware.checkRecipeOwnership, function(req, res){
-    // Recipe.findById(req.params.id, async function(err, recipe){
-    //     if(err){
-    //         req.flash("error", err.message);
-    //         res.redirect("back");
-    //     } else {
-    //         if (req.file) {
-    //           try {
-    //               await cloudinary.v2.uploader.destroy(recipe.imageId);
-    //               var result = await cloudinary.v2.uploader.upload(req.file.path);
-    //               recipe.imageId = result.public_id;
-    //               recipe.image = result.secure_url;
-    //           } catch(err) {
-    //               req.flash("error", err.message);
-    //               return res.redirect("back");
-    //           }
-    //         }
-    //         recipe.name = req.body.name;
-    //         // recipe.description = req.body.description;
-    //         // recipe.ingredients = req.body.ingredients.split(",");
-    //         // recipe.instructions = req.body.instructions;
-    //         // recipe.ctime = req.body.ctime;
-    //         // recipe.ptime = req.body.ptime;
-    //         recipe.save();
-    //         req.flash("success","Successfully Updated!");
-    //         res.redirect("/recipes/" + recipe._id);
-    //     }
-    // });
-    
-    req.body.recipe.ingredients = req.body.recipe.ingredients.split(",");
-    Recipe.findByIdAndUpdate(req.params.id, req.body.recipe, function(err, updatedRecipe){
+    Recipe.findById(req.params.id, function(err, recipe){
         if(err){
-            res.redirect("/recipes");
-        }
-        else{
-            req.flash("success","Successfully edited the recipe!");
-            res.redirect("/recipes/" + req.params.id);
+            req.flash("error", err.message);
+            res.redirect("back");
+        } else {
+            /* if (req.file) {
+              try {
+                  await cloudinary.v2.uploader.destroy(recipe.imageId);
+                  var result = await cloudinary.v2.uploader.upload(req.file.path);
+                  recipe.imageId = result.public_id;
+                  recipe.image = result.secure_url;
+              } catch(err) {
+                  req.flash("error", err.message);
+                  return res.redirect("back");
+              }
+            } */
+            recipe.name = req.body.recipe.name;
+            recipe.description = req.body.recipe.description;
+            recipe.ingredients = req.body.ingredients;
+            recipe.instructions = req.body.instructions;
+            recipe.ctime = req.body.recipe.ctime;
+            recipe.ptime = req.body.recipe.ptime;
+            recipe.save();
+            req.flash("success","Successfully Updated!");
+            res.redirect("/recipes/" + recipe._id);
         }
     });
 });
