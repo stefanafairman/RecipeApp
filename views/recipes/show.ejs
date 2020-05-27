@@ -43,6 +43,7 @@
                 <div class="caption-full">
                     <h4><a><%= recipe.name %></a></h4>
                     <p><%= recipe.description %></p>
+                    <p>Category: <%= recipe.category %></p>
                     <p>
                         <em>Submitted By: <a href="/users/<%= recipe.author.id %>"> <%= recipe.author.username %> </a>, <%= moment(recipe.createdAt).fromNow() %> </em>
                     </p>

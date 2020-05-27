@@ -7,6 +7,7 @@ var recipeSchema = new mongoose.Schema({
     image: String,
     imageId: String,
     description: String,
+    category: String,
     //Info
     serving: String,
     ctime: String,

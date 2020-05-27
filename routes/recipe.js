@@ -75,17 +75,17 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), async function(r
     var name = req.body.name;
     var image = "";
     var desc = req.body.description;
+    var category = req.body.category;
     var serving = req.body.serving;
     var ctime = req.body.ctime;
     var ptime = req.body.ptime;
     var ingredients = req.body.ingredients;
-    //var split = ingredients.split(",");
     var instructions = req.body.instructions;
     var author = {
         id: req.user._id,
         username: req.user.username
     }
-    var newRecipe = {name: name, image: image, description: desc, serving: serving, ctime: ctime, ptime: ptime, ingredients: ingredients, instructions: instructions, author: author};
+    var newRecipe = {name: name, image: image, description: desc, category:category, serving: serving, ctime: ctime, ptime: ptime, ingredients: ingredients, instructions: instructions, author: author};
     
     //callback for the image upload
     await cloudinary.uploader.upload(req.file.path, function(result){
@@ -146,19 +146,9 @@ router.put("/:id", upload.single("image"), middleware.checkRecipeOwnership, func
             req.flash("error", err.message);
             res.redirect("back");
         } else {
-            /* if (req.file) {
-              try {
-                  await cloudinary.v2.uploader.destroy(recipe.imageId);
-                  var result = await cloudinary.v2.uploader.upload(req.file.path);
-                  recipe.imageId = result.public_id;
-                  recipe.image = result.secure_url;
-              } catch(err) {
-                  req.flash("error", err.message);
-                  return res.redirect("back");
-              }
-            } */
             recipe.name = req.body.recipe.name;
             recipe.description = req.body.recipe.description;
+            recipe.category = req.body.recipe.category;
             recipe.ingredients = req.body.ingredients;
             recipe.instructions = req.body.instructions;
             recipe.ctime = req.body.recipe.ctime;

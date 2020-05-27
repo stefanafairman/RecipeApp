@@ -20,18 +20,29 @@
                 <div class="form-group">
                     <input class="form-control" type="text" name="description" placeholder="description">
                 </div>
+
+                <select class="form-group" id="dropdown" name="category">
+                    <option value="Appetizers">Appetizers</option>
+                    <option value="Breads">Breads</option>
+                    <option value="Fish">Fish</option>
+                    <option value="Beef">Beef</option>
+                    <option value="Poultry">Poultry</option>
+                    <option value="Pork">Pork</option>
+                    <option value="Soups">Soups</option>
+                    <option value="Pastas">Pastas</option>
+                    <option value="Sides">Sides</option>
+                    <option value="Desserts">Desserts</option>
+                </select>
+
                 <div class="form-group">
                     <input class="form-control" type="number" name="serving" placeholder="serving" min="1" step="1">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="number" name="ctime" placeholder="cook time">
+                    <input class="form-control" type="number" name="ctime" placeholder="cook time" min="0">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="number" name="ptime" placeholder="prep time">
+                    <input class="form-control" type="number" name="ptime" placeholder="prep time" min="0">
                 </div>
-                <!-- <div class="form-group">
-                    <input class="form-control" type="text" name="ingredients" placeholder="ingredients">
-                </div> -->
 
                 <div class="form-group">
                     <div id="dynamicIngredient">
@@ -94,4 +105,15 @@
         }
     }
 </script>
+
+<!--script for populating the dropdown for categories-->
+<script>
+    function setSelectedIndex(s, i)
+    {
+        s.options[i-1].selected = true;
+        return;
+    }
+    setSelectedIndex(document.getElementById("dropdown"), 1);    
+</script>
+
 <%- include("../partials/footer") %>

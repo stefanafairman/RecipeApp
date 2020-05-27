@@ -11,13 +11,22 @@
                 <div class="form-group">
                     <input class="form-control" type="text" name="recipe[image]" value="<%= recipe.image %>">
                 </div>
-                <!-- <div class="form-group">
-                    <label for="image">Image</label>
-                    <input type="file" name="image" id="image" accept="image/*">
-                </div>  -->
                 <div class="form-group">
                     <input class="form-control" type="text" name="recipe[description]" value="<%= recipe.description %>">
                 </div>
+
+                <select class="form-group" id="dropdown" name="recipe[category]">
+                    <option value="Appetizers">Appetizers</option>
+                    <option value="Breads">Breads</option>
+                    <option value="Fish">Fish</option>
+                    <option value="Beef">Beef</option>
+                    <option value="Poultry">Poultry</option>
+                    <option value="Pork">Pork</option>
+                    <option value="Soups">Soups</option>
+                    <option value="Pastas">Pastas</option>
+                    <option value="Sides">Sides</option>
+                    <option value="Desserts">Desserts</option>
+                </select>
 
                 <div class="form-group">
                     <input class="form-control" type="number" name="recipe[serving]" value="<%= recipe.serving %>">
@@ -89,5 +98,15 @@
             sCounter++;
         }
     }
+</script>
+
+<!--script for populating the dropdown for categories-->
+<script>
+    function setSelectedIndex(s, i)
+    {
+        s.options[i-1].selected = true;
+        return;
+    }
+    setSelectedIndex(document.getElementById("dropdown"), 1);    
 </script>
 <%- include("../partials/footer") %>
