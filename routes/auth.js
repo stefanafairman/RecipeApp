@@ -31,7 +31,9 @@ router.post("/register", function(req, res){
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            avatar: req.body.avatar
+            avatar: req.body.avatar,
+            facebookLink: req.body.facebookLink,
+            pinterestLink: req.body.pinterestLink
         });
     //admin check    
     if(req.body.adminCode === "secretcode123"){

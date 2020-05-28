@@ -12,8 +12,8 @@
                 <h1><%= user.firstName + " " + user.lastName %></h1>
                 <p class="title">Bio goes here</p>
                 <div>
-                    <a href="#"><i class="fa fa-pinterest"></i></a>   
-                    <a href="#"><i class="fa fa-facebook"></i></a> 
+                    <a href="<%= user.pinterestLink %>"><i class="fa fa-pinterest"></i></a>   
+                    <a href="<%= user.facebookLink %>"><i class="fa fa-facebook"></i></a> 
                 </div>
                 <div class="grid-container" style="margin: 24px 0;">
                    <div>Followers: <%= user.followers.length %></div>   

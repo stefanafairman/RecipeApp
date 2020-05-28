@@ -8,6 +8,8 @@ var UserSchema = new mongoose.Schema({
     avatar: String,
     firstName: String,
     lastName: String,
+    pinterestLink: String,
+    facebookLink: String,
     email: { type: String, unique: true, required: true },
 
     //admin 

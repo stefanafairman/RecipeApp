@@ -105,6 +105,10 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), async function(r
           let notification = await Notification.create(newNotification);
           follower.notifications.push(notification);
           follower.save();
+            // User.findById(follower.id, function(err, otherUser){
+            //     otherUser.notifications.push(notification);
+            //     otherUser.save();
+            // })
         }
   
         //redirect back to recipe page
