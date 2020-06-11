@@ -11,7 +11,7 @@
 						<% allNotifications.forEach(function(notification) { %>
 						<li>
 							<a href="/recipes/<%= notification.recipeId %>">
-								<%= notification.username %> created a new recipe %>
+								<%= notification.username %> posted a new recipe %>
 							</a>
 						</li>
 						<% }); %>
@@ -21,7 +21,6 @@
 		</div>
 	</div>
 </div>
-
 
 
 <%- include("../partials/footer") %>

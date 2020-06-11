@@ -2,56 +2,71 @@
 
 <div class="container">
     <div class="row">
-        <h1 style="text-align: center">Edit <%= recipe.name %></h1>
+        <h1 style="text-align: center">Edit - <%= recipe.name %></h1>
         <div style="width: 30%; margin: 25px auto;">
             <form action="/recipes/<%= recipe._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
+                    <label for="recipe[name]">Recipe Name</label>
                     <input class="form-control" type="text" name="recipe[name]" value="<%= recipe.name %>">
                 </div>
                 <div class="form-group">
+                    <label for="recipe[image]">Image</label>
                     <input class="form-control" type="text" name="recipe[image]" value="<%= recipe.image %>">
                 </div>
                 <div class="form-group">
+                    <label for="recipe[description]">Description</label>
                     <input class="form-control" type="text" name="recipe[description]" value="<%= recipe.description %>">
                 </div>
 
-                <select class="form-group" id="dropdown" name="recipe[category]">
-                    <option value="Appetizers">Appetizers</option>
-                    <option value="Breads">Breads</option>
-                    <option value="Fish">Fish</option>
-                    <option value="Beef">Beef</option>
-                    <option value="Poultry">Poultry</option>
-                    <option value="Pork">Pork</option>
-                    <option value="Soups">Soups</option>
-                    <option value="Pastas">Pastas</option>
-                    <option value="Sides">Sides</option>
-                    <option value="Desserts">Desserts</option>
-                </select>
+                <div>
+                    <label for="category" style="margin-right: 90px">Category</label>
+                    <select class="form-group" id="dropdown" name="recipe[category]">
+                        <option value="Appetizers">Appetizers</option>
+                        <option value="Breads">Breads</option>
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="Fish">Fish</option>
+                        <option value="Beef">Beef</option>
+                        <option value="Poultry">Poultry</option>
+                        <option value="Pork">Pork</option>
+                        <option value="Soups">Soups</option>
+                        <option value="Pastas">Pastas</option>
+                        <option value="Sides">Sides</option>
+                        <option value="Desserts">Desserts</option>
+                    </select>
+                </div>
 
                 <div class="form-group">
+                    <label for="recipe[serving]">Servings</label>
                     <input class="form-control" type="number" name="recipe[serving]" value="<%= recipe.serving %>">
                 </div>
                 <div class="form-group">
+                    <label for="recipe[ctime]">Cook Time</label>
                     <input class="form-control" type="number" name="recipe[ctime]" value="<%= recipe.ctime %>">
                 </div>
                 <div class="form-group">
+                    <label for="recipe[ptime]">Prep Time</label>
                     <input class="form-control" type="number" name="recipe[ptime]" value="<%= recipe.ptime %>">
                 </div>
-
-                <div class="form-group">
+                <!-- Retrieve dynamic ingredients -->
+                <label for="ingredients[]">Ingredients</label>
+                <% recipe.ingredients.forEach(function(ingredient){%>
                     <div id="dynamicIngredient">
-                        Ingredients <input class="form-control" style="margin-bottom: 5%" type="text" name="ingredients[]" placeholder="ingredients">
+                        <input style='margin-bottom: 5%' class='form-control' type='text' name='ingredients[]' value='<%= ingredient %>'>
                     </div>
-                    <input type="button" value="Add another ingredient" onclick="addIngredients('dynamicIngredient');">
+                <% }); %>
+                <div class="form-group">
+                    <input class="form-control dynamicButtons" type="button" value="Add another ingredient" onclick="addIngredients('dynamicIngredient');">
                 </div>
     
                     <!--Dynamically add steps-->
-                <div class="form-group"  id="mrgn">
-                    <!-- <input class="form-control" type="text" name="instructions" placeholder="instructions"> -->
+                <label for="instructions[]">Step 1</label>
+                <% recipe.instructions.forEach(function(instruction){%>
                     <div id="dynamicStep">
-                        Step 1<br><input class="form-control" style="margin-bottom: 5%" type="text" name="instructions[]" placeholder="instructions">
+                        <input style='margin-bottom: 5%' class='form-control' type='text' name='instructions[]' value='<%= instruction %>'>
                     </div>
-                    <input type="button" value="Add another step" onclick="addSteps('dynamicStep');">
+                <% }); %>
+                <div class="form-group"  id="mrgn">
+                    <input class="form-control dynamicButtons" type="button" value="Add another step" onclick="addSteps('dynamicStep');">
                 </div>
 
                 <div id="mrgn" class="form-group">

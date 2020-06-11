@@ -18,7 +18,11 @@ hr {
 .btn{
     background-color: #FF3B3F;
 }
-
+.dynamicButtons{
+    background-color: #CAEBF2;
+    color: black;
+    font-size: 15px;
+}
 .glyphicon{
     color: #FF3B3F;
 }
@@ -52,9 +56,13 @@ hr {
     text-decoration: underline;
 }
 
-.footer{
+.navbar-fixed-bottom{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 .caption .btn{

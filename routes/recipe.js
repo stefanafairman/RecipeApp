@@ -165,15 +165,32 @@ router.put("/:id", upload.single("image"), middleware.checkRecipeOwnership, func
 });
 
 //DESTROY
-router.delete("/:id", middleware.checkRecipeOwnership, function(req, res){
-    Recipe.findByIdAndRemove(req.params.id, function(err){
-        if(err){
-            res.redirect("/recipes");
+router.delete("/:id", middleware.checkRecipeOwnership, async function(req, res){
+    try {
+        let recipe = await Recipe.findByIdAndRemove(req.params.id, function(err){
+                if(err){
+                    res.redirect("/recipes");
+                }
+                else{
+                    res.redirect("/recipes");
+                }
+            });;
+        let user = await User.findById(req.user._id).populate("followers").exec();
+        let removeNotification = {
+          username: req.user.username,
+          recipeId: recipe.id
         }
-        else{
-            res.redirect("/recipes");
+        for(const follower of user.followers) {
+          let notification = await Notification.remove(removeNotification);
+          follower.save();
         }
-    });
+        //redirect back to recipe page
+        res.redirect(`/recipes/${recipe.id}`);
+      } 
+      catch(err) {
+        req.flash('error', err.message);
+        res.redirect('back');
+      }
 });
 
 //match any characters globally

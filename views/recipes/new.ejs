@@ -6,58 +6,61 @@
         <div style="width: 30%; margin: 25px auto;">
             <form action="/recipes" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="name" placeholder="name" required>
+                    <label for="name">Recipe Name</label>
+                    <input class="form-control" type="text" name="name" placeholder="ex: Chicken Fajitas" required>
                 </div>
-                <!-- <div class="form-group">
-                    <input class="form-control" type="text" name="image" placeholder="image url">
-                </div> -->
-
                 <div class="form-group">
                     <label for="image">Image</label>
                     <input type="file" name="image" id="image" accept="image/*" required>
                 </div>
-
                 <div class="form-group">
-                    <input class="form-control" type="text" name="description" placeholder="description">
+                    <label for="description">Description</label>
+                    <input class="form-control" type="text" name="description" placeholder="ex: This recipe is amazing!">
                 </div>
-
-                <select class="form-group" id="dropdown" name="category">
-                    <option value="Appetizers">Appetizers</option>
-                    <option value="Breads">Breads</option>
-                    <option value="Fish">Fish</option>
-                    <option value="Beef">Beef</option>
-                    <option value="Poultry">Poultry</option>
-                    <option value="Pork">Pork</option>
-                    <option value="Soups">Soups</option>
-                    <option value="Pastas">Pastas</option>
-                    <option value="Sides">Sides</option>
-                    <option value="Desserts">Desserts</option>
-                </select>
-
+                <div>
+                    <label for="category" style="margin-right: 90px">Category</label>
+                    <select class="form-group" id="dropdown" name="category">
+                        <option value="Appetizers">Appetizers</option>
+                        <option value="Breads">Breads</option>
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="Fish">Fish</option>
+                        <option value="Beef">Beef</option>
+                        <option value="Poultry">Poultry</option>
+                        <option value="Pork">Pork</option>
+                        <option value="Soups">Soups</option>
+                        <option value="Pastas">Pastas</option>
+                        <option value="Sides">Sides</option>
+                        <option value="Desserts">Desserts</option>
+                    </select>
+                </div>
                 <div class="form-group">
+                    <label for="serving">Servings</label>
                     <input class="form-control" type="number" name="serving" placeholder="serving" min="1" step="1">
                 </div>
                 <div class="form-group">
+                    <label for="ctime">Cook Time</label>
                     <input class="form-control" type="number" name="ctime" placeholder="cook time" min="0">
                 </div>
                 <div class="form-group">
+                    <label for="ptime">Prep Time</label>
                     <input class="form-control" type="number" name="ptime" placeholder="prep time" min="0">
                 </div>
-
+                <!--Dynamically add ingredients-->
                 <div class="form-group">
                     <div id="dynamicIngredient">
-                        Ingredients <input class="form-control" style="margin-bottom: 5%" type="text" name="ingredients[]" placeholder="ingredients">
+                        <label for="ingredients[]">Ingredients (one at a time)</label>
+                        <input class="form-control" style="margin-bottom: 5%" type="text" name="ingredients[]" placeholder="ex: 2 eggs">
                     </div>
-                    <input type="button" value="Add another ingredient" onclick="addIngredients('dynamicIngredient');">
+                    <input class="form-control dynamicButtons" type="button" value="Add Another Ingredient" onclick="addIngredients('dynamicIngredient');">
                 </div>
 
                 <!--Dynamically add steps-->
                 <div class="form-group"  id="mrgn">
-                    <!-- <input class="form-control" type="text" name="instructions" placeholder="instructions"> -->
                     <div id="dynamicStep">
-                        Step 1<br><input class="form-control" style="margin-bottom: 5%" type="text" name="instructions[]" placeholder="instructions">
+                        <label for="instructions[]">Step 1</label>
+                        <br><input class="form-control" style="margin-bottom: 5%" type="text" name="instructions[]" placeholder="instructions">
                     </div>
-                    <input type="button" value="Add another step" onclick="addSteps('dynamicStep');">
+                    <input class="form-control dynamicButtons" type="button" value="Add another step" onclick="addSteps('dynamicStep');">
                 </div>
 
                 <div id="mrgn" class="form-group">
@@ -82,14 +85,14 @@
         }
         else {
             var newdiv = document.createElement('div');
-            newdiv.innerHTML = "<input style='margin-bottom: 5%' class='form-control' type='text' name='ingredients[]'>";
+            newdiv.innerHTML = "<input style='margin-bottom: 5%' class='form-control' type='text' name='ingredients[]' placeholder='ex: 2 eggs'>";
             document.getElementById(divName).appendChild(newdiv);
             iCounter++;
         }
     }
 </script>
 
-<!--script for dynamically adding more ingredients as needed-->
+<!--script for dynamically adding more instructions as needed-->
 <script>
     var sCounter = 1;
     var sLimit = 10;
