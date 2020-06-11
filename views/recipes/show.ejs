@@ -25,7 +25,14 @@
                     <h3 class="panel-title">Instructions</h3>
                 </div>
                 <div class="panel-body">
-                    <p><%= recipe.instructions %></p>
+                    <% var countStep = 1; %>
+                    <% recipe.instructions.forEach(function(instruction){%>
+                        <p class="step">Step <%= countStep %> </p>
+                        <%= instruction %>
+                        <% countStep++; %>
+                        <hr>
+                    <% }); %>
+                    
                 </div>
             </div>
         </div>
@@ -36,11 +43,12 @@
                 <div class="caption-full">
                     <h4><a><%= recipe.name %></a></h4>
                     <p><%= recipe.description %></p>
+                    <p>Category: <%= recipe.category %></p>
                     <p>
                         <em>Submitted By: <a href="/users/<%= recipe.author.id %>"> <%= recipe.author.username %> </a>, <%= moment(recipe.createdAt).fromNow() %> </em>
                     </p>
                     <!--Only logged in users can see the Edit and Delete button-->
-                    <% if(currentUser && recipe.author.id.equals(currentUser._id)){ %>
+                    <% if(currentUser && recipe.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                         <a class="btn btn-xs btn-warning" href="/recipes/<%= recipe._id %>/edit">Edit</a>
                         <form class="delete-form" action="/recipes/<%= recipe._id %>?_method=DELETE" method="POST">
                             <button class="btn btn-xs btn-danger">Delete</button>
@@ -63,7 +71,7 @@
                             <strong><%= comment.author.username %></strong>
                             <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
                             <p> <%= comment.text %> </p>
-                            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                            <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                                 <a class="btn btn-xs btn-danger" 
                                     href="/recipes/<%= recipe._id %>/comments/<%= comment._id %>/edit">
                                     Edit

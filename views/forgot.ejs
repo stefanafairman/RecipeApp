@@ -6,8 +6,9 @@
                 <form action="/forgot" method="POST">
                     <legend>Forgot Password</legend>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input class="form-control" type="email" name="email" placeholder="email">
+                        <label for="email"><span>*</span> Email</label>
+                        <span><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input class="form-control" type="email" name="email" placeholder="janedoe@xyz.com" required>
                     </div>
                     <div id="mrgn" class="form-group">
                         <button class="btn btn-lg btn-danger btn-block">Reset Password</button>

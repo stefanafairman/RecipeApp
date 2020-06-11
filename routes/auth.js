@@ -31,8 +31,14 @@ router.post("/register", function(req, res){
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            avatar: req.body.avatar
+            avatar: req.body.avatar,
+            facebookLink: req.body.facebookLink,
+            pinterestLink: req.body.pinterestLink
         });
+    //admin check    
+    if(req.body.adminCode === "secretcode123"){
+        newUser.isAdmin = true;
+    }
 
     User.register(newUser, req.body.password, function(err, user){
         if(err){
@@ -241,19 +247,18 @@ router.get('/follow/:id', isLoggedIn, async function(req, res) {
     }
   });
   
-  // handle notification
-  router.get('/notifications/:id', isLoggedIn, async function(req, res) {
-    try {
-      let notification = await Notification.findById(req.params.id);
-      notification.isRead = true;
-      notification.save();
-      res.redirect(`/recipes/${notification.recipeId}`);
-    } catch(err) {
-      req.flash('error', err.message);
-      res.redirect('back');
-    }
-  });
-
+// handle notification
+//   router.get('/notifications/:id', isLoggedIn, async function(req, res) {
+//     try {
+//       let notification = await Notification.findById(req.params.id);
+//       notification.isRead = true;
+//       notification.save();
+//       res.redirect(`/recipes/${notification.recipeId}`);
+//     } catch(err) {
+//       req.flash('error', err.message);
+//       res.redirect('back');
+//     }
+//   });
 
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){

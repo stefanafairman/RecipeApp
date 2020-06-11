@@ -13,7 +13,7 @@ middlewareObj.checkRecipeOwnership = function(req, res, next){
                 }
                 else{
                     //does the user own the Recipe?
-                    if(foundRecipe.author.id.equals(req.user._id)){
+                    if(foundRecipe.author.id.equals(req.user._id) || req.user.isAdmin){
                         next();
                     }
                     else{
@@ -38,7 +38,7 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
                 }
                 else{
                     //does the user own the comment?
-                    if(foundComment.author.id.equals(req.user._id)){
+                    if(foundComment.author.id.equals(req.user._id) || req.user.isAdmin){
                         next();
                     }
                     else{

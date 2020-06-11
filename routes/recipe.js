@@ -75,17 +75,17 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), async function(r
     var name = req.body.name;
     var image = "";
     var desc = req.body.description;
+    var category = req.body.category;
     var serving = req.body.serving;
     var ctime = req.body.ctime;
     var ptime = req.body.ptime;
     var ingredients = req.body.ingredients;
-    var split = ingredients.split(",");
     var instructions = req.body.instructions;
     var author = {
         id: req.user._id,
         username: req.user.username
     }
-    var newRecipe = {name: name, image: image, description: desc, serving: serving, ctime: ctime, ptime: ptime, ingredients: split, instructions: instructions, author: author};
+    var newRecipe = {name: name, image: image, description: desc, category:category, serving: serving, ctime: ctime, ptime: ptime, ingredients: ingredients, instructions: instructions, author: author};
     
     //callback for the image upload
     await cloudinary.uploader.upload(req.file.path, function(result){
@@ -105,6 +105,10 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), async function(r
           let notification = await Notification.create(newNotification);
           follower.notifications.push(notification);
           follower.save();
+            // User.findById(follower.id, function(err, otherUser){
+            //     otherUser.notifications.push(notification);
+            //     otherUser.save();
+            // })
         }
   
         //redirect back to recipe page
@@ -141,56 +145,52 @@ router.get("/:id/edit", middleware.checkRecipeOwnership, function(req, res){
 
 //UPDATE
 router.put("/:id", upload.single("image"), middleware.checkRecipeOwnership, function(req, res){
-    // Recipe.findById(req.params.id, async function(err, recipe){
-    //     if(err){
-    //         req.flash("error", err.message);
-    //         res.redirect("back");
-    //     } else {
-    //         if (req.file) {
-    //           try {
-    //               await cloudinary.v2.uploader.destroy(recipe.imageId);
-    //               var result = await cloudinary.v2.uploader.upload(req.file.path);
-    //               recipe.imageId = result.public_id;
-    //               recipe.image = result.secure_url;
-    //           } catch(err) {
-    //               req.flash("error", err.message);
-    //               return res.redirect("back");
-    //           }
-    //         }
-    //         recipe.name = req.body.name;
-    //         // recipe.description = req.body.description;
-    //         // recipe.ingredients = req.body.ingredients.split(",");
-    //         // recipe.instructions = req.body.instructions;
-    //         // recipe.ctime = req.body.ctime;
-    //         // recipe.ptime = req.body.ptime;
-    //         recipe.save();
-    //         req.flash("success","Successfully Updated!");
-    //         res.redirect("/recipes/" + recipe._id);
-    //     }
-    // });
-    
-    req.body.recipe.ingredients = req.body.recipe.ingredients.split(",");
-    Recipe.findByIdAndUpdate(req.params.id, req.body.recipe, function(err, updatedRecipe){
+    Recipe.findById(req.params.id, function(err, recipe){
         if(err){
-            res.redirect("/recipes");
-        }
-        else{
-            req.flash("success","Successfully edited the recipe!");
-            res.redirect("/recipes/" + req.params.id);
+            req.flash("error", err.message);
+            res.redirect("back");
+        } else {
+            recipe.name = req.body.recipe.name;
+            recipe.description = req.body.recipe.description;
+            recipe.category = req.body.recipe.category;
+            recipe.ingredients = req.body.ingredients;
+            recipe.instructions = req.body.instructions;
+            recipe.ctime = req.body.recipe.ctime;
+            recipe.ptime = req.body.recipe.ptime;
+            recipe.save();
+            req.flash("success","Successfully Updated!");
+            res.redirect("/recipes/" + recipe._id);
         }
     });
 });
 
 //DESTROY
-router.delete("/:id", middleware.checkRecipeOwnership, function(req, res){
-    Recipe.findByIdAndRemove(req.params.id, function(err){
-        if(err){
-            res.redirect("/recipes");
+router.delete("/:id", middleware.checkRecipeOwnership, async function(req, res){
+    try {
+        let recipe = await Recipe.findByIdAndRemove(req.params.id, function(err){
+                if(err){
+                    res.redirect("/recipes");
+                }
+                else{
+                    res.redirect("/recipes");
+                }
+            });;
+        let user = await User.findById(req.user._id).populate("followers").exec();
+        let removeNotification = {
+          username: req.user.username,
+          recipeId: recipe.id
         }
-        else{
-            res.redirect("/recipes");
+        for(const follower of user.followers) {
+          let notification = await Notification.remove(removeNotification);
+          follower.save();
         }
-    });
+        //redirect back to recipe page
+        res.redirect(`/recipes/${recipe.id}`);
+      } 
+      catch(err) {
+        req.flash('error', err.message);
+        res.redirect('back');
+      }
 });
 
 //match any characters globally

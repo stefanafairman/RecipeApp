@@ -2,38 +2,73 @@
 
 <div class="container">
     <div class="row">
-        <h1 style="text-align: center">Edit <%= recipe.name %></h1>
+        <h1 style="text-align: center">Edit - <%= recipe.name %></h1>
         <div style="width: 30%; margin: 25px auto;">
             <form action="/recipes/<%= recipe._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
+                    <label for="recipe[name]">Recipe Name</label>
                     <input class="form-control" type="text" name="recipe[name]" value="<%= recipe.name %>">
                 </div>
                 <div class="form-group">
+                    <label for="recipe[image]">Image</label>
                     <input class="form-control" type="text" name="recipe[image]" value="<%= recipe.image %>">
                 </div>
-                <!-- <div class="form-group">
-                    <label for="image">Image</label>
-                    <input type="file" name="image" id="image" accept="image/*">
-                </div>  -->
                 <div class="form-group">
+                    <label for="recipe[description]">Description</label>
                     <input class="form-control" type="text" name="recipe[description]" value="<%= recipe.description %>">
                 </div>
 
+                <div>
+                    <label for="category" style="margin-right: 90px">Category</label>
+                    <select class="form-group" id="dropdown" name="recipe[category]">
+                        <option value="Appetizers">Appetizers</option>
+                        <option value="Breads">Breads</option>
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="Fish">Fish</option>
+                        <option value="Beef">Beef</option>
+                        <option value="Poultry">Poultry</option>
+                        <option value="Pork">Pork</option>
+                        <option value="Soups">Soups</option>
+                        <option value="Pastas">Pastas</option>
+                        <option value="Sides">Sides</option>
+                        <option value="Desserts">Desserts</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
+                    <label for="recipe[serving]">Servings</label>
                     <input class="form-control" type="number" name="recipe[serving]" value="<%= recipe.serving %>">
                 </div>
                 <div class="form-group">
+                    <label for="recipe[ctime]">Cook Time</label>
                     <input class="form-control" type="number" name="recipe[ctime]" value="<%= recipe.ctime %>">
                 </div>
                 <div class="form-group">
+                    <label for="recipe[ptime]">Prep Time</label>
                     <input class="form-control" type="number" name="recipe[ptime]" value="<%= recipe.ptime %>">
                 </div>
+                <!-- Retrieve dynamic ingredients -->
+                <label for="ingredients[]">Ingredients</label>
+                <% recipe.ingredients.forEach(function(ingredient){%>
+                    <div id="dynamicIngredient">
+                        <input style='margin-bottom: 5%' class='form-control' type='text' name='ingredients[]' value='<%= ingredient %>'>
+                    </div>
+                <% }); %>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="recipe[ingredients]" value="<%= recipe.ingredients %>">
+                    <input class="form-control dynamicButtons" type="button" value="Add another ingredient" onclick="addIngredients('dynamicIngredient');">
                 </div>
-                <div class="form-group">
-                    <input class="form-control" type="text" name="recipe[instructions]" value="<%= recipe.instructions %>">
+    
+                    <!--Dynamically add steps-->
+                <label for="instructions[]">Step 1</label>
+                <% recipe.instructions.forEach(function(instruction){%>
+                    <div id="dynamicStep">
+                        <input style='margin-bottom: 5%' class='form-control' type='text' name='instructions[]' value='<%= instruction %>'>
+                    </div>
+                <% }); %>
+                <div class="form-group"  id="mrgn">
+                    <input class="form-control dynamicButtons" type="button" value="Add another step" onclick="addSteps('dynamicStep');">
                 </div>
+
                 <div id="mrgn" class="form-group">
                     <button class="btn btn-lg btn-danger btn-block">Submit</button>
                 </div>
@@ -45,4 +80,48 @@
     </div>
 </div>
 
+<!--============-->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    var iCounter = 1;
+    var iLimit = 20;
+    function addIngredients(divName){
+        if (iCounter == iLimit)  {
+            alert("You have reached the limit of adding " + iCounter + " ingredients");
+        }
+        else {
+            var newdiv = document.createElement('div');
+            newdiv.innerHTML = "<input style='margin-bottom: 5%' class='form-control' type='text' name='ingredients[]'>";
+            document.getElementById(divName).appendChild(newdiv);
+            iCounter++;
+        }
+    }
+</script>
+
+<!--script for dynamically adding more ingredients as needed-->
+<script>
+    var sCounter = 1;
+    var sLimit = 10;
+    function addSteps(divName){
+        if (sCounter == sLimit)  {
+            alert("You have reached the limit of adding " + sCounter + " steps");
+        }
+        else {
+            var newdiv = document.createElement('div');
+            newdiv.innerHTML = "Step " + (sCounter + 1) + "<input style='margin-bottom: 5%' class='form-control' type='text' name='instructions[]'>";
+            document.getElementById(divName).appendChild(newdiv);
+            sCounter++;
+        }
+    }
+</script>
+
+<!--script for populating the dropdown for categories-->
+<script>
+    function setSelectedIndex(s, i)
+    {
+        s.options[i-1].selected = true;
+        return;
+    }
+    setSelectedIndex(document.getElementById("dropdown"), 1);    
+</script>
 <%- include("../partials/footer") %>

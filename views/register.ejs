@@ -5,22 +5,51 @@
                 <form action="/register" method="POST">
                     <legend>Register</legend>
                     <div class="form-group">
-                        <input class="form-control" type="text" name="username" placeholder="Username" required>
-                    </div>
-                    <div>
-                        <input class="form-control" type="password" name="password" placeholder="Password" required>
-                    </div>
-                    <div class="form-group">
-                        <input style="margin-top: 15px;" class="form-control" type="text" name="firstName" placeholder="First Name">
+                        <label for="username"><span>*</span> Username</label>
+                        <span><i class="glyphicon glyphicon-user"></i></span>
+                        <input class="form-control" type="text" name="username" placeholder="ex: janedoe" required>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="text" name="lastName" placeholder="Last Name">
+                        <label for="password"><span>*</span> Password</label>
+                        <span><i class="glyphicon glyphicon-user"></i></span>
+                        <input class="form-control" type="password" name="password" placeholder="ex: 123Password" required>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="email" name="email" placeholder="Email" required>
+                        <label for="firstName"> First Name</label>
+                        <span><i class="glyphicon glyphicon-user"></i></span>
+                        <input  class="form-control" type="text" name="firstName" placeholder="Jane">
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="text" name="avatar" placeholder="Avatar URL">
+                        <label for="lastName"> Last Name</label>
+                        <span><i class="glyphicon glyphicon-user"></i></span>
+                        <input class="form-control" type="text" name="lastName" placeholder="Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="email"><span>*</span> Email</label>
+                        <span><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input class="form-control" type="email" name="email" placeholder="janedoe@xyz.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="facebookLink"> Link to Facebook</label>
+                        <span><i class="glyphicon glyphicon-link"></i></span>
+                        <input class="form-control" type="text" name="facebookLink" placeholder="https://www.facebook.com/jane.doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="pinterestLink"> Link to Pinterest</label>
+                        <span><i class="glyphicon glyphicon-link"></i></span>
+                        <input class="form-control" type="text" name="pinterestLink" placeholder="https://www.pinterest.com/janedoe/">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pinterestLink"> Avatar</label>
+                        <span><i class="glyphicon glyphicon-sunglasses"></i></span>
+                        <input class="form-control" type="text" name="avatar" placeholder="https://www.nicepng.com/png/detail/202-2024687_profile-icon-for-the-politics-category-profile-icon.png">
+                    </div>
+                    <div class="form-group">
+                        <label for="pinterestLink"> Admin Code</label>
+                        <span><i class="glyphicon glyphicon-eye-open"></i></span>
+                        <input class="form-control" type="text" name="adminCode" placeholder="Admin Code">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-lg btn-danger btn-block">Sign Up</button>
