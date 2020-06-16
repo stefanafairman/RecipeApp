@@ -1,5 +1,7 @@
-# Project Name
+# FairmanKitchen
 > This recipe website hosts a databse of user-generated recipes!
+
+![Logo](./img/logo.png)
 
 ## General info
 After registering, a user can create new recipes, comment on recipes, follow other users and receive notifications. Website users that are not registered can still search the database and view the recipes, but they cannot comment or follow other users.
