@@ -21,7 +21,7 @@ After registering, a user can create new recipes, comment on recipes, follow oth
 * Authentication and Authorization
 
 ## Demo
-You can demo the app here: https://fairman-kitchen.herokuapp.com/
+You can demo the app here: http://fairmankitchen.ddns.net/
 
 ## Features
 List of features ready and TODOs for future development
